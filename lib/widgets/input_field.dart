@@ -10,7 +10,7 @@ Widget inputField(
     Function(String)? onChanged,
     String? hintText}) {
   return Container(
-    
+    height: 45,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(15),
       border: Border.all(

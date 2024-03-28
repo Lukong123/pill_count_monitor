@@ -103,6 +103,7 @@ class _SignInState extends State<SignIn> {
                     height: 2,
                   ),
                   Container(
+                    height: 45,
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
                     border: Border.all(color: AppColors.grey)),
                     child: TextFormField(

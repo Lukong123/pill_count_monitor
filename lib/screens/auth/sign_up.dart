@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:pcm/utils/constants/constants.dart';
 import 'package:pcm/utils/styles/app_colors.dart';
+import 'package:pcm/utils/styles/assets_strings.dart';
 import 'package:pcm/widgets/app_button.dart';
 import 'package:pcm/widgets/input_field.dart';
 // import 'package:sizer/sizer.dart';
@@ -26,7 +28,7 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       body: ListView(children: [
         SizedBox(
-        height: AppConstant.height(context) * 0.05,
+        height: AppConstant.height(context) * 0.02,
       ),
                    Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.0),
@@ -39,7 +41,7 @@ class _SignUpState extends State<SignUp> {
             ),
           ),
           SizedBox(
-        height: AppConstant.height(context) * 0.02,
+        height: AppConstant.height(context) * 0.015,
       ),
       Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.0),
@@ -54,7 +56,7 @@ class _SignUpState extends State<SignUp> {
       ),
       
           SizedBox(
-        height: AppConstant.height(context) * 0.03,
+        height: AppConstant.height(context) * 0.017,
       ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
@@ -87,7 +89,7 @@ class _SignUpState extends State<SignUp> {
                       hintText: 'John Doe'),
                    
           SizedBox(
-        height: AppConstant.height(context) * 0.05,
+        height: AppConstant.height(context) * 0.023,
       ),
       Text(
                     "Email",
@@ -113,7 +115,7 @@ class _SignUpState extends State<SignUp> {
                       hintText: 'johndoe@gmail.com'),
                    
           SizedBox(
-        height: AppConstant.height(context) * 0.05,
+        height: AppConstant.height(context) * 0.023,
       ),
                   Text(
                     "Password",
@@ -126,6 +128,7 @@ class _SignUpState extends State<SignUp> {
                     height: 2,
                   ),
                   Container(
+                    height: 45,
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
                     border: Border.all(color: AppColors.grey)),
                     child: TextFormField(
@@ -156,7 +159,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                            
           SizedBox(
-        height: AppConstant.height(context) * 0.05,
+        height: AppConstant.height(context) * 0.023,
       ),
                   Text(
                     "Confirm Password",
@@ -169,6 +172,7 @@ class _SignUpState extends State<SignUp> {
                     height: 2,
                   ),
                   Container(
+                    height: 45,
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
                     border: Border.all(color: AppColors.grey)),
                     child: TextFormField(
@@ -199,25 +203,9 @@ class _SignUpState extends State<SignUp> {
                   ),
           
                   SizedBox(
-                    height: 4,
+                    height: 2
                   ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () {
-                        // Get.to(() => const PasswordReset(),
-                        //     duration: const Duration(
-                        //       milliseconds: 800,
-                        //     ),
-                        //     curve: Curves.easeInCirc,
-                        //     transition: Transition.fadeIn);
-                      },
-                      child: Text(
-                        "Forgot Password?",
-                        style: TextStyle(color: AppColors.errorColor),
-                      ),
-                    ),
-                  ),
+                 
                   SizedBox(
                     height: AppConstant.height(context) * 0.04,
                   ),
@@ -268,7 +256,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                       child: Center(
                         child: Text(
-                          'Sign In',
+                          'Sign Up',
                           style: TextStyle(
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold,
@@ -300,13 +288,31 @@ class _SignUpState extends State<SignUp> {
           //       // icon: SvgPicture.asset(ImageAssets.arrow),
           //       context: context),
           SizedBox(
-            height: AppConstant.height(context) * 0.02,
+            height: AppConstant.height(context) * 0.05,
           ),
-          Row(
+         
+            Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+              
+              SvgPicture.asset(ImageAssets.lineSvg),
+              Text("Or Sign Up With", style: TextStyle(
+                color: AppColors.dark
+              ),),
+              Image.asset(ImageAssets.linePng),
+
+            ],),
+            SizedBox(
+            height: AppConstant.height(context) * 0.03,
+          ),
+              Center(child: Image.asset(ImageAssets.google)),
+              SizedBox(
+            height: AppConstant.height(context) * 0.03,
+          ),
+               Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Dont have an account?',
+                'Already have an account?',
                 style: TextStyle(
                     fontSize: 15, color: AppColors.dark),
               ),
@@ -318,7 +324,7 @@ class _SignUpState extends State<SignUp> {
                 //   Get.to(() => const SignUp());
                 // },
                 child: Text(
-                  'Sign Up',
+                  'Sign In',
                   style: TextStyle(
                       fontSize: 16,
                       color: AppColors.secondaryDark,
@@ -326,7 +332,8 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
             ],
-          )
+          ),
+
         ]),
     );
   }
