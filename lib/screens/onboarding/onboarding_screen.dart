@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:pcm/models/onboard_data.dart';
 import 'package:pcm/screens/auth/sign_in.dart';
+import 'package:pcm/screens/auth/sign_up.dart';
 import 'package:pcm/utils/constants/constants.dart';
 import 'package:pcm/utils/navigation/router.dart';
 import 'package:pcm/utils/styles/app_colors.dart';
@@ -141,8 +143,8 @@ class _OnBoardingState extends State<OnBoarding> {
 
                               GestureDetector(
                                     onTap: () {
-                                      PageNavigator(ctx: context)
-                                          .nextPageOnly(page: const SignIn());
+                                    Get.to(() => const SignUp());
+
                                     },
                                     child: Container(
                                                   width: MediaQuery.of(context).size.width * 0.85,

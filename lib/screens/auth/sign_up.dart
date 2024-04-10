@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:pcm/screens/auth/sign_in.dart';
 import 'package:pcm/utils/constants/constants.dart';
 import 'package:pcm/utils/styles/app_colors.dart';
 import 'package:pcm/utils/styles/assets_strings.dart';
@@ -18,6 +21,9 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
      late double width; // Declare the width variable with 'late'
+     var passwordController = TextEditingController();
+     var emailController = TextEditingController();
+
 
   @override
   void initState() {
@@ -102,7 +108,7 @@ class _SignUpState extends State<SignUp> {
                     height: 1.0,
                   ),
                   inputField(
-                      controller: TextEditingController(),
+                      controller: emailController,
                       onChanged: (value) {
                         // provider.setEmail(value);
                         // provider.validLogin();
@@ -132,7 +138,7 @@ class _SignUpState extends State<SignUp> {
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
                     border: Border.all(color: AppColors.grey)),
                     child: TextFormField(
-                      controller: TextEditingController(),
+                      controller: passwordController,
                       obscureText: true,
                       
                       onChanged: (value) {
@@ -240,32 +246,48 @@ class _SignUpState extends State<SignUp> {
           // }),
           Align(
             alignment: Alignment.center,
-            child: Container(
-                      width: MediaQuery.of(context).size.width * 0.85,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: AppColors.secondaryDark,
-                        borderRadius: BorderRadius.circular(20.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            offset: const Offset(0, 2),
-                            blurRadius: 4.0,
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Sign Up',
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.plainWhite,
-                            decoration: TextDecoration.none,
+            child: GestureDetector(
+            onTap: () {
+              FirebaseAuth.instance.createUserWithEmailAndPassword(
+                email: emailController.text,
+                 password: passwordController.text
+                 ).then((value) {
+              // Get.to(() => SignIn());
+              Navigator.push(context,
+              MaterialPageRoute(builder: (context) => SignIn()));
+
+                 }).onError((error, stackTrace) {
+                  print("Error: (error.toString())");
+                  print(error.toString());
+                 });
+            },
+              child: Container(
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: AppColors.secondaryDark,
+                          borderRadius: BorderRadius.circular(20.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              offset: const Offset(0, 2),
+                              blurRadius: 4.0,
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Sign Up',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.plainWhite,
+                              decoration: TextDecoration.none,
+                            ),
                           ),
                         ),
                       ),
-                    ),
+            ),
           ),
 
           // appButton(
@@ -320,9 +342,9 @@ class _SignUpState extends State<SignUp> {
                 width: 4.0,
               ),
               GestureDetector(
-                // onTap: () {
-                //   Get.to(() => const SignUp());
-                // },
+                onTap: () {
+                  Get.to(() => const SignIn());
+                },
                 child: Text(
                   'Sign In',
                   style: TextStyle(

@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pcm/screens/auth/sign_up.dart';
+import 'package:pcm/screens/dashboard/dashboard_main.dart';
 import 'package:pcm/utils/constants/constants.dart';
 import 'package:pcm/utils/navigation/router.dart';
 import 'package:pcm/utils/styles/app_colors.dart';
@@ -19,6 +21,8 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
      late double width; // Declare the width variable with 'late'
+     var emailController = TextEditingController();
+     var passwordController = TextEditingController();
 
   @override
   void initState() {
@@ -77,7 +81,7 @@ class _SignInState extends State<SignIn> {
                     height: 1.0,
                   ),
                   inputField(
-                      controller: TextEditingController(),
+                      controller: emailController,
                       onChanged: (value) {
                         // provider.setEmail(value);
                         // provider.validLogin();
@@ -107,7 +111,7 @@ class _SignInState extends State<SignIn> {
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
                     border: Border.all(color: AppColors.grey)),
                     child: TextFormField(
-                      controller: TextEditingController(),
+                      controller: passwordController,
                       obscureText: true,
                       
                       onChanged: (value) {
@@ -184,34 +188,51 @@ class _SignInState extends State<SignIn> {
           //       icon: SvgPicture.asset(ImageAssets.arrow),
           //       context: context);
           // }),
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-                      width: MediaQuery.of(context).size.width * 0.85,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: AppColors.secondaryDark,
-                        borderRadius: BorderRadius.circular(20.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            offset: const Offset(0, 2),
-                            blurRadius: 4.0,
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Sign In',
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.plainWhite,
-                            decoration: TextDecoration.none,
+          GestureDetector(
+            onTap: () {
+              // Get.to(() => const DashboardMain());
+               FirebaseAuth.instance.signInWithEmailAndPassword(
+                email: emailController.text,
+                 password: passwordController.text
+                 ).then((value) {
+              // Get.to(() => SignIn());
+              Navigator.push(context,
+              MaterialPageRoute(builder: (context) => DashboardMain()));
+
+                 }).onError((error, stackTrace) {
+                  print("Error: (error.toString())");
+                  print(error.toString());
+                 });
+            },
+            child: Align(
+              alignment: Alignment.center,
+              child: Container(
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: AppColors.secondaryDark,
+                          borderRadius: BorderRadius.circular(20.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              offset: const Offset(0, 2),
+                              blurRadius: 4.0,
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Sign In',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.plainWhite,
+                              decoration: TextDecoration.none,
+                            ),
                           ),
                         ),
                       ),
-                    ),
+            ),
           ),
 
           // appButton(

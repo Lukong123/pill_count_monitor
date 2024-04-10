@@ -3,25 +3,26 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pcm/models/nav_model.dart';
 import 'package:pcm/screens/dashboard/add_pill.dart';
-import 'package:pcm/screens/dashboard/dashboard_main_card.dart';
+import 'package:pcm/screens/dashboard/drug_details.dart';
 import 'package:pcm/screens/dashboard/pill_history.dart';
 import 'package:pcm/screens/notification/notifications.dart';
 import 'package:pcm/utils/constants/constants.dart';
 import 'package:pcm/utils/styles/app_colors.dart';
 import 'package:pcm/utils/styles/assets_strings.dart';
+import 'package:pcm/widgets/color_card.dart';
 // import 'package:pcm/widgets/custom_bottom_bar.dart';
 import 'package:table_calendar/table_calendar.dart';
 // import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 
-class DashboardMain extends StatefulWidget {
-  const DashboardMain({super.key});
+class DashboardMainCard extends StatefulWidget {
+  const DashboardMainCard({super.key});
 
   @override
-  State<DashboardMain> createState() => _DashboardMainState();
+  State<DashboardMainCard> createState() => _DashboardMainCardState();
 }
 
-class _DashboardMainState extends State<DashboardMain> {
+class _DashboardMainCardState extends State<DashboardMainCard> {
   int currentIndex = 0;
   List<NavModel> pages = [];
 
@@ -58,22 +59,25 @@ class _DashboardMainState extends State<DashboardMain> {
 
               Align(
                 alignment: Alignment.centerRight,
-                child: Container(
-                  height: 50,
-                  width: 54,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                  color: AppColors.secondaryDark,
-
-                  ),
-
-                  child: GestureDetector(
-                    onTap: () {
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    height: 45,
+                    width: 35,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                    color: AppColors.secondaryDark,
+                  
+                    ),
+                  
+                    child: GestureDetector(
+                      onTap: () {
                         Get.to(() =>  Notifications());
                       },
-                    child: Icon(Icons.notifications_none,
-                    color: AppColors.plainWhite,
-                    size: 30,),
+                      child: Icon(Icons.notifications_none,
+                      color: AppColors.plainWhite,
+                      size: 30,),
+                    ),
                   ),
                 ),
               ),
@@ -232,42 +236,70 @@ class _DashboardMainState extends State<DashboardMain> {
               Align(
                 alignment: Alignment.center,
                 child: GestureDetector(
-                   onTap: (){
+                  onTap: (){
                     Get.to(() => DashboardMainCard());
-                   },
-                  child: Container(
-                      height: AppConstant.height(context) * 0.40,
-                      width: AppConstant.width(context) * 0.90,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                        color: AppColors.grey,
-                  
-                      )
-                  
-                      ),
-                  
-                      child:Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          
-                          children: [
-                            SvgPicture.asset(ImageAssets.alert,
-                            color: AppColors.errorColor,),
-                            const SizedBox(height: 20,),
-                            Center(
-                              child: Text("No Drugs found. Click to add a schedule",
-                              style: TextStyle(
-                                color: AppColors.errorColor,
-                                // fontWeight: FontWeight.w800,
-                                fontSize: 16
-                              ),),
-                            ),
-                          ],
+                  },
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(() => DrugDetails());
+                        },
+                        child: colorCard(
+                          cardColor: AppColors.secondaryDark,
+                          medName: 'Ibuprofen',
+                          dose: '2 capsule',
+                          time1: '7:00 am',
+                          time2: '2: 00 pm',
+                          medImg: ImageAssets.ibuprof,
+                          badgeColor: AppColors.primaryLight
                         ),
-                      )
-                    ),
-                ),
+                      ),
+
+
+                       GestureDetector(
+                        onTap: () {
+                          Get.to(() => DrugDetails());
+                        },
+                         child: colorCard(
+                          cardColor: AppColors.warningColor,
+                          medName: 'Efferelegan 1000mg',
+                          dose: '1 capsule',
+                          time1: '7:00 am',
+                          time2: '2: 00 pm',
+                          medImg: ImageAssets.efferegan
+                                               ),
+                       ),
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(() => DrugDetails());
+                        },
+                        child: colorCard(
+                          cardColor: AppColors.secondaryDark,
+                          medName: 'Ibuprofen',
+                          dose: '2 capsule',
+                          time1: '7:00 am',
+                          time2: '2: 00 pm',
+                          medImg: ImageAssets.ibuprof
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(() => DrugDetails());
+                        },
+                        child: colorCard(
+                          cardColor: AppColors.warningColor,
+                          medName: 'Efferelegan 100mg',
+                          dose: '1 capsule',
+                          time1: '7:00 am',
+                          time2: '2: 00 pm',
+                          medImg: ImageAssets.efferegan
+                        ),
+                      ),
+                    ]),
+                  )                ),
               )
 
         ]
@@ -285,7 +317,7 @@ bottomNavigationBar: BottomNavigationBar(
         case 0:
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => DashboardMain()),
+            MaterialPageRoute(builder: (context) => DashboardMainCard()),
           );
           break;
         case 1:
@@ -317,13 +349,10 @@ bottomNavigationBar: BottomNavigationBar(
       ),
     ],
   ),
-      child: GestureDetector(
-        onTap:() {Get.to(() => const AddPill());},
-        child: CircleAvatar(
-          backgroundColor: AppColors.plainWhite,
-          child: Icon(Icons.add,
-          color: AppColors.dark)),
-      ),
+      child: CircleAvatar(
+        backgroundColor: AppColors.plainWhite,
+        child: Icon(Icons.add,
+        color: AppColors.dark)),
     ), label: ''),
     BottomNavigationBarItem(icon: Icon(Icons.remove_red_eye_rounded), label: 'Pill History'),
   ],
