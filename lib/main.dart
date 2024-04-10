@@ -2,13 +2,14 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pcm/firebase_options.dart';
 import 'package:pcm/screens/auth/sign_in.dart';
 import 'package:pcm/screens/splash/splash_screen.dart';
 // import 'package:sizer/sizer.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 

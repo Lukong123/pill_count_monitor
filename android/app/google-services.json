@@ -1,22 +1,21 @@
 {
   "project_info": {
-    "project_number": "220152922515",
-    "project_id": "pill-count",
-    "storage_bucket": "pill-count.appspot.com"
+    "project_number": "35613408215",
+    "project_id": "pillcount-fbe1f",
+    "storage_bucket": "pillcount-fbe1f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:220152922515:android:349d6fd66c4b75212f6866",
+        "mobilesdk_app_id": "1:35613408215:android:c58c7b40e9a54664c0a992",
         "android_client_info": {
-          
           "package_name": "com.example.pcm"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyD5sBUmX-0iQmrTCjLxpveGqBnkFNDmNQA"
+          "current_key": "AIzaSyA6qj9CmhytrRtDqhrdA5XJHVc20X7KzVo"
         }
       ],
       "services": {
