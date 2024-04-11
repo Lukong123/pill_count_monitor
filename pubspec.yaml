@@ -44,6 +44,7 @@ dependencies:
   table_calendar: ^3.1.1
   firebase_core: ^2.27.0
   firebase_auth: ^4.17.8
+  cloud_firestore: ^4.15.8
   # syncfusion_flutter_calendar: ^24.1.1
 
 dev_dependencies:

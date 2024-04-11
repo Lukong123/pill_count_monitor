@@ -7,7 +7,8 @@ import 'package:pcm/screens/auth/sign_in.dart';
 import 'package:pcm/screens/splash/splash_screen.dart';
 // import 'package:sizer/sizer.dart';
 
-void main() async{
+void main() async{           
+  
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());

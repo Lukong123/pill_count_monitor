@@ -163,32 +163,7 @@ class _SignInState extends State<SignIn> {
               ),
             ),
           ),
-          // Consumer<LoginProvider>(builder: (context, login, child) {
-          //   WidgetsBinding.instance.addPostFrameCallback((_) {
-          //     if (login.reqMessage != '') {
-          //       login.clear();
-          //     }
-          //   });
-          //   return appButton(
-          //       tap: () {
-          //         if (!provider.loginFormKey.currentState!.validate()) {
-          //         } else {
-          //           login.login(
-          //               emailPhone: provider.emailOrPhoneController.text.trim(),
-          //               password: provider.passwordController.text.trim(),
-          //               context: context);
-          //         }
-          //       },
-          //       status: login.isLoading,
-          //       enable: provider.isValidSignIn,
-          //       bdColor: AppColors.kTettiary,
-          //       bgColor: AppColors.kTettiary,
-          //       textColor: AppColors.kWhiteColor,
-          //       text: 'Sign in',
-          //       icon: SvgPicture.asset(ImageAssets.arrow),
-          //       context: context);
-          // }),
-          GestureDetector(
+                  GestureDetector(
             onTap: () {
               // Get.to(() => const DashboardMain());
                FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -235,25 +210,6 @@ class _SignInState extends State<SignIn> {
             ),
           ),
 
-          // appButton(
-          //       tap: () {
-          //         // if (!provider.loginFormKey.currentState!.validate()) {
-          //         // } else {
-          //         //   login.login(
-          //         //       emailPhone: provider.emailOrPhoneController.text.trim(),
-          //         //       password: provider.passwordController.text.trim(),
-          //         //       context: context);
-          //         // }
-          //       },
-          //       status: true,
-          //       // enable: provider.isValidSignIn,
-          //       enable: true,
-          //       bdColor: AppColors.secondaryLight,
-          //       bgColor: AppColors.secondaryLight,
-          //       textColor: AppColors.plainWhite,
-          //       text: 'Sign in',
-          //       // icon: SvgPicture.asset(ImageAssets.arrow),
-          //       context: context),
           SizedBox(
             height: AppConstant.height(context) * 0.02,
           ),
