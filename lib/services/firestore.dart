@@ -1,8 +1,5 @@
-import 'dart:js';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 class FirestoreService {
   // get pillNum => null;
@@ -12,11 +9,11 @@ class FirestoreService {
   Future<void> createPill(
     String pillName,
     int numOfPills,
-    DateTime startDate,
-    DateTime endDate,
-    TimeOfDay time1,
-    TimeOfDay time2,
-    List<String> schedule,
+    String startDate,
+    String endDate,
+    String time1,
+    String time2,
+    String schedule,
   ) async {
     // Create the pill document
     final pillDocument = pillsCollection.doc();
@@ -27,16 +24,18 @@ class FirestoreService {
       'numOfPills': numOfPills,
       'startDate': startDate,
       'endDate': endDate,
-      'time1': {
-      'hour': time1.hour,
-      'minute': time1.minute,
-    },
-    'time2': time2 != null
-        ? {
-            'hour': time2.hour,
-            'minute': time2.minute,
-          }
-        : null,
+      'time1': time1,
+      'time2': time2,
+    //   'time1': {
+    //   'hour': time1.hour,
+    //   'minute': time1.minute,
+    // },
+    // 'time2': time2 != null
+    //     ? {
+    //         'hour': time2.hour,
+    //         'minute': time2.minute,
+    //       }
+    //     : null,
       
       'schedule': schedule,
     });

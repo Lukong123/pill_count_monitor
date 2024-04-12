@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pcm/screens/dashboard/dashboard_main.dart';
 import 'package:pcm/screens/dashboard/pill_history.dart';
+import 'package:pcm/services/firestore.dart';
 import 'package:pcm/utils/constants/constants.dart';
 import 'package:pcm/utils/styles/app_colors.dart';
 import 'package:intl/intl.dart'; 
@@ -56,6 +57,8 @@ class _AddPillState extends State<AddPill> {
 
 
  TimeOfDay? selectedTime;
+ TimeOfDay? selectedTime2;
+
 
   Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
@@ -70,9 +73,24 @@ class _AddPillState extends State<AddPill> {
     }
   }
 
+  Future<void> _selectTime2(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+
+    if (picked != null) {
+      setState(() {
+        selectedTime2 = picked;
+      });
+    }
+  }
+
+
   void incrementPillCount() {
     setState(() {
       pillCount++;
+      print(pillCount);
     });
   }
 
@@ -83,6 +101,18 @@ class _AddPillState extends State<AddPill> {
       });
     }
   }
+final FirestoreService _firestoreService = FirestoreService();
+final TextEditingController pillNameController = TextEditingController();
+final TextEditingController pillNumberController = TextEditingController();
+final TextEditingController startDateController = TextEditingController();
+final TextEditingController endDateController = TextEditingController();
+final TextEditingController time1Controller = TextEditingController();
+final TextEditingController time2Controller = TextEditingController();
+
+ String selectedSchedule = "";
+ List<String> schedule = [];
+
+
 
 
 
@@ -98,6 +128,8 @@ class _AddPillState extends State<AddPill> {
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
               onTap: () {
+                
+              
                 Navigator.of(context).pop();
               },
               child: Icon(Icons.arrow_back),
@@ -144,7 +176,7 @@ class _AddPillState extends State<AddPill> {
                 )
               ),
               child: TextFormField(
-                controller: TextEditingController(),
+                controller: pillNameController,
                 // keyboardType: keyboardType,
                 // validator: validator,
                 // onChanged: onChanged,
@@ -433,39 +465,132 @@ class _AddPillState extends State<AddPill> {
                 height: AppConstant.height(context) * 0.01,
               ),
 
-        Align(
-          alignment: Alignment.centerRight,
-          child: GestureDetector(
-            onTap: () {
-                _selectTime(context);
+        // Align(
+        //   alignment: Alignment.centerRight,
+        //   child: GestureDetector(
+        //     onTap: () {
+        //         _selectTime(context);
 
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: 95,
-                height: 30,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(7),
-                color: AppColors.primaryLight,
+        //     },
+        //     child: Padding(
+        //       padding: const EdgeInsets.all(8.0),
+        //       child: Container(
+        //         width: 95,
+        //         height: 30,
+        //         decoration: BoxDecoration(
+        //           borderRadius: BorderRadius.circular(7),
+        //         color: AppColors.primaryLight,
                   
+        //         ),
+        //         child: Padding(
+        //           padding: const EdgeInsets.fromLTRB(3.0, 0, 5 , 5),
+        //           child: Row(children: [
+        //             Icon(Icons.add,
+        //             color: AppColors.primaryDark,),
+        //             Text("Add Time",
+        //             style: TextStyle(
+        //               color: AppColors.primaryDark,
+        //               fontWeight: FontWeight.w500
+        //             ),)
+        //           ]),
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        SizedBox(
+                height: AppConstant.height(context) * 0.02,
+              ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+                  'Time 2',
+                  style: TextStyle(
+                    color: AppColors.dark,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16
+                  ),
                 ),
+        ),
+
+        
+          SizedBox(
+                height: AppConstant.height(context) * 0.01,
+              ),
+
+        Align(
+          alignment: Alignment.center,
+          child: Container(
+                width: MediaQuery.of(context).size.width * 0.95,
+                decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+          children: [
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  _selectTime2(context);
+                },
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(3.0, 0, 5 , 5),
-                  child: Row(children: [
-                    Icon(Icons.add,
-                    color: AppColors.primaryDark,),
-                    Text("Add Time",
-                    style: TextStyle(
-                      color: AppColors.primaryDark,
-                      fontWeight: FontWeight.w500
-                    ),)
-                  ]),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Text(
+                    selectedTime != null
+                        ? selectedTime2!.format(context)
+                        : 'Select Time',
+                    style: TextStyle(fontSize: 16),
+                  ),
                 ),
               ),
             ),
-          ),
+            IconButton(
+              icon: Icon(Icons.access_time),
+              onPressed: () {
+                _selectTime2(context);
+              },
+            ),
+          ],
+                ),),
         ),
+
+      SizedBox(
+                height: AppConstant.height(context) * 0.01,
+              ),
+
+        // Align(
+        //   alignment: Alignment.centerRight,
+        //   child: GestureDetector(
+        //     onTap: () {
+        //         _selectTime(context);
+
+        //     },
+        //     child: Padding(
+        //       padding: const EdgeInsets.all(8.0),
+        //       child: Container(
+        //         width: 95,
+        //         height: 30,
+        //         decoration: BoxDecoration(
+        //           borderRadius: BorderRadius.circular(7),
+        //         color: AppColors.primaryLight,
+                  
+        //         ),
+        //         child: Padding(
+        //           padding: const EdgeInsets.fromLTRB(3.0, 0, 5 , 5),
+        //           child: Row(children: [
+        //             Icon(Icons.add,
+        //             color: AppColors.primaryDark,),
+        //             Text("Add Time",
+        //             style: TextStyle(
+        //               color: AppColors.primaryDark,
+        //               fontWeight: FontWeight.w500
+        //             ),)
+        //           ]),
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
       
         Padding(
           padding: const EdgeInsets.fromLTRB(8, 2, 8, 8),
@@ -478,80 +603,140 @@ class _AddPillState extends State<AddPill> {
                   ),
                 ),
         ),
-         Row(
-              children: [
-                   SizedBox(width: AppConstant.width(context) * 0.03),
 
-                 Container(
-                    height: 35,
-                    width: 130,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                    color: AppColors.successLight,
+        DropdownButtonFormField<String>(
+  value: "select pill schedule",
+  onChanged: (newValue) {
+    setState(() {
+      // selectedSchedule = newValue;
+      //  selectedSchedule = newValue ?? [];
+      
+    //schedule = List.from(selectedSchedule);
+    });
+  },
+  items: [
+    'select pill schedule',
+    'After Breakfast',
+    'After Lunch',
     
-                    ),
+  
+  ].map((e) => 
+  DropdownMenuItem<String>(
+     value: e, 
+    onTap: (){
+setState(() {
+  selectedSchedule = e.toString();
+  print(selectedSchedule);
+});
+    },
+      child: Text(e),
+  )
+  ,
+).toList(),),
+        //  Row(
+        //       children: [
+        //            SizedBox(width: AppConstant.width(context) * 0.03),
+
+        //          Container(
+        //             height: 35,
+        //             width: 130,
+        //             decoration: BoxDecoration(
+        //               borderRadius: BorderRadius.circular(10),
+        //             color: AppColors.successLight,
     
-                    child:Center(
-                      child: Text("After Breakfast",
-                      style: TextStyle(
-                        color: AppColors.successColor,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15
-                      ),),
-                    )
-                  ),
-                  const SizedBox(width: 15,),
-                   Container(
-                    height: 35,
-                    width: 120,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                    color: AppColors.errorLight,
+        //             ),
     
-                    ),
+        //             child:Center(
+        //               child: Text("After Breakfast",
+        //               style: TextStyle(
+        //                 color: AppColors.successColor,
+        //                 fontWeight: FontWeight.w600,
+        //                 fontSize: 15
+        //               ),),
+        //             )
+        //           ),
+        //           const SizedBox(width: 15,),
+        //            Container(
+        //             height: 35,
+        //             width: 120,
+        //             decoration: BoxDecoration(
+        //               borderRadius: BorderRadius.circular(10),
+        //             color: AppColors.errorLight,
     
-                    child:Center(
-                      child: Text("After Lunch",
-                      style: TextStyle(
-                        color: AppColors.errorColor,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15
-                      ),),
-                    )
-                  ),
-                   SizedBox(width: AppConstant.width(context) * 0.05),
-                CircleAvatar(
-                  backgroundColor: AppColors.secondaryDark,
-                  child: IconButton(
-                    icon: Icon(Icons.add,
-                    color: AppColors.plainWhite,),
-                    // onPressed: incrementPillCount,
-                    onPressed: (){},
-                  ),
-                ),
-              ],
-            ),
+        //             ),
+    
+        //             child:Center(
+        //               child: Text("After Lunch",
+        //               style: TextStyle(
+        //                 color: AppColors.errorColor,
+        //                 fontWeight: FontWeight.w600,
+        //                 fontSize: 15
+        //               ),),
+        //             )
+        //           ),
+        //            SizedBox(width: AppConstant.width(context) * 0.05),
+        //         CircleAvatar(
+        //           backgroundColor: AppColors.secondaryDark,
+        //           child: IconButton(
+        //             icon: Icon(Icons.add,
+        //             color: AppColors.plainWhite,),
+        //             // onPressed: incrementPillCount,
+        //             onPressed: (){},
+        //           ),
+        //         ),
+        //       ],
+        //     ),
               SizedBox(height: AppConstant.height(context)* 0.03,),
                    Align(
                     alignment: Alignment.center,
-                     child: Container(
-                      height: 40,
-                      width: AppConstant.width(context)* 0.90,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                      color: AppColors.secondaryDark,
-                         
-                      ),
-                         
-                      child:Center(
-                        child: Text("Add Reminder",
-                        style: TextStyle(
-                          color: AppColors.plainWhite,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16
-                        ),),
-                      )
-                                       ),
+                     child: GestureDetector(
+                      onTap: (){
+                         String pillName = pillNameController.text;
+                
+    // Call the createPill method from the FirestoreService
+          _firestoreService.createPill(
+            pillName,
+            pillCount,
+            date1.toString(),
+            date2.toString(),
+            selectedTime.toString(),
+            selectedTime2.toString(),
+            // time2,
+            selectedSchedule,
+          ).then((value) {
+              // Get.to(() => SignIn());
+              Navigator.push(context,
+              MaterialPageRoute(builder: (context) => DashboardMain()));
+
+                 }).onError((error, stackTrace) {
+                  print("Error: (error.toString())");
+                  print(error.toString());
+                 });
+          
+
+          
+
+                      },
+                       child: Container(
+                        height: 40,
+                        width: AppConstant.width(context)* 0.90,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                        color: AppColors.secondaryDark,
+                           
+                        ),
+                           
+                        child:Center(
+                          child: Text("Add Pill",
+                          style: TextStyle(
+                            color: AppColors.plainWhite,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16
+                          ),),
+                        )
+                                         ),
+                     ),
+                     
                    ),
               SizedBox(height: AppConstant.height(context)* 0.03,),
 
