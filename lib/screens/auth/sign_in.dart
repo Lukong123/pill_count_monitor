@@ -167,7 +167,7 @@ class _SignInState extends State<SignIn> {
             onTap: () {
               // Get.to(() => const DashboardMain());
                FirebaseAuth.instance.signInWithEmailAndPassword(
-                email: emailController.text,
+                email: emailController.text.trim(),
                  password: passwordController.text
                  ).then((value) {
               // Get.to(() => SignIn());

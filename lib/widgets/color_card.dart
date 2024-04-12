@@ -113,7 +113,7 @@ Widget colorCard({
             ),
           ],),
     
-          const SizedBox(width: 17,),
+          const SizedBox(width: 4,),
           Icon(Icons.verified_outlined,
           color: badgeColor ?? AppColors.grey,
           size: 30,),
